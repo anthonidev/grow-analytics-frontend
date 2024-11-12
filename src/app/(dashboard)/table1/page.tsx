@@ -1,6 +1,6 @@
 import TableUser from "./components/TableUser";
-
-export default function Tabla1Page() {
+export const dynamic = "force-dynamic";
+export default function Table1Page() {
   return (
     <main className=" mx-auto max-w-7xl">
       <TableUser />

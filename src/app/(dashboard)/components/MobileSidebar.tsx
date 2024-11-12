@@ -1,23 +1,22 @@
 "use client";
+import { LogoIcon } from "@/components/icons/LogoIcon";
 import { Dialog, Transition } from "@headlessui/react";
 import {
   CircleStackIcon,
-  HomeIcon,
   TableCellsIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { Fragment } from "react";
-import { LogoIcon } from "@/components/icons/LogoIcon";
 
 import { useAppDispatch, useAppSelector } from "@/context/hooks";
 import { toggleSidebar } from "@/context/slice/configSlice";
-import { usePathname } from "next/navigation";
-import { useSession } from "next-auth/react";
 import clsx from "clsx";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export const MobileSidebar = () => {
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   const dispatch = useAppDispatch();
   const { isOpen } = useAppSelector((state) => state.config);
   const handleToggleSidebar = () => dispatch(toggleSidebar());

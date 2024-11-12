@@ -1,10 +1,8 @@
 "use client";
-import { EnvelopeIcon, LockClosedIcon } from "@heroicons/react/24/outline";
-import { useState } from "react";
-import { SubmitHandler } from "react-hook-form";
 import { Form } from "@/components/common/forum";
-import { useRouter } from "next/navigation";
+import { EnvelopeIcon, LockClosedIcon } from "@heroicons/react/24/outline";
 import { Button, Input } from "antd";
+import { SubmitHandler } from "react-hook-form";
 
 interface Signup {
   correo: string;
@@ -17,9 +15,6 @@ interface Signup {
 }
 
 const SignUp = () => {
-  const [signInClicked, setSignInClicked] = useState(false);
-  const router = useRouter();
-  const [error, setError] = useState<string | null>(null);
   const onSubmit: SubmitHandler<Signup> = async (data) => {
     console.log(data);
   };
@@ -28,7 +23,7 @@ const SignUp = () => {
       onSubmit={onSubmit}
       className="flex flex-col space-y-5  p-10 pb-20"
     >
-      {({ register, watch }) => (
+      {({ register }) => (
         <>
           <Input
             size="large"
@@ -102,18 +97,11 @@ const SignUp = () => {
             prefix={<EnvelopeIcon className="w-4 h-4" />}
           />
 
-          {error && (
-            <p className="rounded-md border-x-4  border-red-500 bg-rose-50 py-2 text-center text-xs font-bold text-red-500">
-              {error}
-            </p>
-          )}
-
           <Button
             type="primary"
             htmlType="submit"
             size="large"
             icon={<LockClosedIcon className="h-5 w-5" />}
-            loading={signInClicked}
           >
             Sign Up
           </Button>

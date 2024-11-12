@@ -1,19 +1,13 @@
 "use client";
-// import { getNavigation } from "@/lib/navigation";
 
-import { useSession } from "next-auth/react";
-import { navigations } from "./MobileSidebar";
-import Link from "next/link";
 import clsx from "clsx";
+import { useSession } from "next-auth/react";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
-// import Link from "next/link";
-// import { usePathname } from "next/navigation";
+import { navigations } from "./MobileSidebar";
 
-// function classNames(...classes: string[]) {
-//   return classes.filter(Boolean).join(" ");
-// }
 export const NavigationSidebar = () => {
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   const path = usePathname();
 
   return (
