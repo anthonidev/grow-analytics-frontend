@@ -1,14 +1,12 @@
-// "use client";
+"use client";
 
-// import { NextUIProvider } from "@nextui-org/react";
-// import { ThemeProvider as NextThemesProvider } from "next-themes";
+import { AntdRegistry } from "@ant-design/nextjs-registry";
+import { ThemeProvider as NextThemesProvider } from "next-themes";
 
-// export function ProviderUI({ children }: { children: React.ReactNode }) {
-//   return (
-//     <NextUIProvider>
-//       <NextThemesProvider attribute="class" defaultTheme="light">
-//         {children}
-//       </NextThemesProvider>
-//     </NextUIProvider>
-//   );
-// }
+export function ProviderUI({ children }: { children: React.ReactNode }) {
+  return (
+    <NextThemesProvider attribute="class" defaultTheme="light">
+      <AntdRegistry>{children}</AntdRegistry>
+    </NextThemesProvider>
+  );
+}

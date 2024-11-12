@@ -1,46 +1,30 @@
 "use client";
 import { EnvelopeIcon, LockClosedIcon } from "@heroicons/react/24/outline";
-import { signIn } from "next-auth/react";
 import { useState } from "react";
 import { SubmitHandler } from "react-hook-form";
 import { Form } from "@/components/common/forum";
 import { useRouter } from "next/navigation";
 import { Button, Input } from "antd";
 
-interface Login {
-  email: string;
-  password: string;
+interface Signup {
+  correo: string;
+  contrasena: string;
+  usuario: string;
+  nombre: string;
+  apell_paterno: string;
+  apell_materno: string;
+  tipo_usuario: string;
 }
 
 const SignUp = () => {
   const [signInClicked, setSignInClicked] = useState(false);
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
-  const onSubmit: SubmitHandler<Login> = async (data) => {
-    setSignInClicked(true);
-    const { email, password } = data;
-    try {
-      const res = await signIn("credentials", {
-        email,
-        password,
-        callbackUrl: "/",
-        redirect: false,
-      });
-
-      if (res?.ok) {
-        router.push("/");
-      } else if (res?.error) {
-        setError(res.error);
-        setSignInClicked(false);
-      }
-    } catch (error) {
-      console.error("Error en el login:", error);
-      setError("Error en el login.");
-      setSignInClicked(false);
-    }
+  const onSubmit: SubmitHandler<Signup> = async (data) => {
+    console.log(data);
   };
   return (
-    <Form<Login>
+    <Form<Signup>
       onSubmit={onSubmit}
       className="flex flex-col space-y-5  p-10 pb-20"
     >
@@ -49,9 +33,19 @@ const SignUp = () => {
           <Input
             size="large"
             required
+            placeholder="usuario"
+            {...register("usuario", {
+              required: true,
+              maxLength: 100,
+            })}
+            prefix={<EnvelopeIcon className="w-4 h-4" />}
+          />
+          <Input
+            size="large"
+            required
             type="email"
-            placeholder="email"
-            {...register("email", {
+            placeholder="correo"
+            {...register("correo", {
               required: true,
               maxLength: 100,
             })}
@@ -61,11 +55,51 @@ const SignUp = () => {
             size="large"
             placeholder="password"
             required
-            {...register("password", {
+            {...register("contrasena", {
               required: true,
               maxLength: 100,
             })}
             prefix={<LockClosedIcon className="w-4 h-4" />}
+          />
+          <Input
+            size="large"
+            required
+            placeholder="nombre"
+            {...register("nombre", {
+              required: true,
+              maxLength: 100,
+            })}
+            prefix={<EnvelopeIcon className="w-4 h-4" />}
+          />
+          <Input
+            size="large"
+            required
+            placeholder="apell_paterno"
+            {...register("apell_paterno", {
+              required: true,
+              maxLength: 100,
+            })}
+            prefix={<EnvelopeIcon className="w-4 h-4" />}
+          />
+          <Input
+            size="large"
+            required
+            placeholder="apell_materno"
+            {...register("apell_materno", {
+              required: true,
+              maxLength: 100,
+            })}
+            prefix={<EnvelopeIcon className="w-4 h-4" />}
+          />
+          <Input
+            size="large"
+            required
+            placeholder="tipo_usuario"
+            {...register("tipo_usuario", {
+              required: true,
+              maxLength: 100,
+            })}
+            prefix={<EnvelopeIcon className="w-4 h-4" />}
           />
 
           {error && (
@@ -76,21 +110,13 @@ const SignUp = () => {
 
           <Button
             type="primary"
-            disabled={!watch("email") || !watch("password")}
             htmlType="submit"
             size="large"
             icon={<LockClosedIcon className="h-5 w-5" />}
             loading={signInClicked}
           >
-            Login
+            Sign Up
           </Button>
-          <button
-            className="text-sm underline text-gray-500 hover:text-gray-700"
-            type="button"
-            onClick={() => router.push("/auth/recover-password")}
-          >
-            forgot password?
-          </button>
         </>
       )}
     </Form>

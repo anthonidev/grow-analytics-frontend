@@ -1,36 +1,69 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Frontend de Grow Analytics (Prueba técnica) Next JS (React) + Tailwind CSS + ANT Design
 
-## Getting Started
+## Descripción
 
-First, run the development server:
+Este proyecto es el frontend de la prueba técnica de Grow Analytics. Se trata de una aplicación web que permite a los usuarios registrarse, iniciar sesión y visualizar un dashboard con información de los usuarios.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Requisitos previos
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Asegúrate de tener las siguientes herramientas instaladas en tu entorno de desarrollo:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- [Node.js](https://nodejs.org/) (v18.0.0 o superior)
+- [pnpm](https://pnpm.io/) (opcional, pero recomendado)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Instalación
 
-## Learn More
+1. Clona el repositorio en tu máquina local:
 
-To learn more about Next.js, take a look at the following resources:
+   ```bash
+   git clone https://github.com/anthonidev/grow-analytics-frontend.git
+   cd grow-analytics-backend
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. Instala las dependencias necesarias:
+   ```bash
+   npm install # o pnpm install
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Configuración
 
-## Deploy on Vercel
+1. Crea un archivo `.env` en la raíz del proyecto y define las variables de entorno necesarias:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   ```
+    AUTH_BACKEND_URL=
+    NODE_ENV=
+    NEXTAUTH_URL=
+    NEXTAUTH_SECRET=
+    JWT_SECRET=
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Uso
+
+### Comandos para desarrollo
+
+- Iniciar el servidor en modo desarrollo:
+
+  ```bash
+    npm run dev
+  ```
+
+- Construir el proyecto:
+
+  ```bash
+  npm run build
+  ```
+
+- Ejecutar pruebas:
+  ```bash
+  npm run test
+  ```
+
+## Tecnologías utilizadas
+
+- **Next.js**: Framework de React para el desarrollo de aplicaciones web.
+- **Tailwind CSS**: Framework de CSS para el diseño de interfaces de usuario.
+- **Ant Design**: Librería de componentes de React.
+- **NextAuth.js**: Librería de autenticación para Next.js.
+- **Jest**: Framework de pruebas para JavaScript.
+- **Redux Toolkit**: Librería para el manejo del estado de la aplicación.
+- **Axios**: Cliente HTTP basado en promesas.

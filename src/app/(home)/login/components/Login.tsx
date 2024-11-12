@@ -2,7 +2,7 @@
 import { EnvelopeIcon, LockClosedIcon } from "@heroicons/react/24/outline";
 import { signIn } from "next-auth/react";
 import { useState } from "react";
-import { SubmitHandler } from "react-hook-form";
+import { Controller, SubmitHandler } from "react-hook-form";
 import { Form } from "@/components/common/forum";
 import { useRouter } from "next/navigation";
 import { Button, Input } from "antd";
@@ -44,28 +44,34 @@ const Login = () => {
       onSubmit={onSubmit}
       className="flex flex-col space-y-5  p-10 pb-20"
     >
-      {({ register, watch }) => (
+      {({ watch, control }) => (
         <>
-          <Input
-            size="large"
-            required
-            type="email"
-            placeholder="email"
-            {...register("email", {
-              required: true,
-              maxLength: 100,
-            })}
-            prefix={<EnvelopeIcon className="w-4 h-4" />}
+          <Controller
+            name="email"
+            control={control}
+            render={({ field }) => (
+              <Input
+                size="large"
+                required
+                type="email"
+                placeholder="email"
+                {...field}
+                prefix={<EnvelopeIcon className="w-4 h-4" />}
+              />
+            )}
           />
-          <Input.Password
-            size="large"
-            placeholder="password"
-            required
-            {...register("password", {
-              required: true,
-              maxLength: 100,
-            })}
-            prefix={<LockClosedIcon className="w-4 h-4" />}
+          <Controller
+            name="password"
+            control={control}
+            render={({ field }) => (
+              <Input.Password
+                size="large"
+                placeholder="password"
+                required
+                {...field}
+                prefix={<LockClosedIcon className="w-4 h-4" />}
+              />
+            )}
           />
 
           {error && (

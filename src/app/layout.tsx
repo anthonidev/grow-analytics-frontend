@@ -3,6 +3,8 @@ import localFont from "next/font/local";
 import "@/styles/globals.css";
 import { ProviderAuth } from "@/components/providers/ProviderAuth";
 import { ProviderToast } from "@/components/providers/ProviderToast";
+import { ProviderRedux } from "@/components/providers/ProviderRedux";
+import { ProviderUI } from "@/components/providers/ProviderUI";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -30,10 +32,14 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ProviderAuth>
-          {children}
-          <ProviderToast />
-        </ProviderAuth>
+        <ProviderUI>
+          <ProviderRedux>
+            <ProviderAuth>
+              {children}
+              <ProviderToast />
+            </ProviderAuth>
+          </ProviderRedux>
+        </ProviderUI>
       </body>
     </html>
   );

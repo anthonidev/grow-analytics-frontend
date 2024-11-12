@@ -16,8 +16,26 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        osc: {
+          DEFAULT: "#090B10",
+          100: "#333333",
+          200: "#2D2E2E",
+          300: "#242424",
+          400: "#0F111A",
+        },
+        cla: {
+          DEFAULT: "#F3F5FE",
+          100: "#F2F6FF",
+          200: "#2D2E2E",
+          300: "#242424",
+        },
+        da: {
+          DEFAULT: "#161717",
+          100: "#242424",
+        },
       },
     },
   },
+  darkMode: "class",
   plugins: [],
 } satisfies Config;
