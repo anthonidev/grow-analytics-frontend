@@ -87,6 +87,12 @@ const Login = () => {
           >
             Login
           </Button>
+
+          <div className="flex flex-col space-y-2 text-xs text-center text-gray-500">
+            <span>USUARIO DE PRUEBA</span>
+            <span>correo: admin@gmail.com</span>
+            <span>contraseña: 123456</span>
+          </div>
         </>
       )}
     </Form>
