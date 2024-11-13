@@ -40,10 +40,7 @@ const Login = () => {
     }
   };
   return (
-    <Form<Login>
-      onSubmit={onSubmit}
-      className="flex flex-col space-y-5  p-10 pb-20"
-    >
+    <Form<Login> onSubmit={onSubmit} className="flex flex-col space-y-5  p-10 ">
       {({ watch, control }) => (
         <>
           <Controller
@@ -90,13 +87,6 @@ const Login = () => {
           >
             Login
           </Button>
-          <button
-            className="text-sm underline text-gray-500 hover:text-gray-700"
-            type="button"
-            onClick={() => router.push("/auth/recover-password")}
-          >
-            forgot password?
-          </button>
         </>
       )}
     </Form>

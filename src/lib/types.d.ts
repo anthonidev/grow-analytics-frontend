@@ -1,5 +1,5 @@
 interface UserAccount {
-  usuario: number;
+  usuario: string;
   nombre: string;
   correo: string;
   id: number;
@@ -16,4 +16,21 @@ interface Pagination {
 interface UserAccountPagination extends Pagination {
   count: number;
   results: UserAccount[];
+}
+
+interface EditUser {
+  correo: string;
+  usuario: string;
+  nombre: string;
+  apell_paterno: string;
+  apell_materno: string;
+}
+interface Signup {
+  correo: string;
+  contrasena: string;
+  usuario: string;
+  nombre: string;
+  apell_paterno: string;
+  apell_materno: string;
+  tipo_usuario: string;
 }

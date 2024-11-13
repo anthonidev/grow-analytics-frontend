@@ -1,5 +1,11 @@
-import { getUsers } from "@/server/actions/users";
+import {
+  createUserService,
+  deleteUserService,
+  getUsers,
+  updateUserService,
+} from "@/server/actions/users";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 
 interface UserState extends Pagination {
   loading: boolean;
@@ -29,6 +35,71 @@ export const fetchUsers = createAsyncThunk(
         return rejectWithValue(error.message);
       }
       return rejectWithValue("An unknown error occurred.");
+    }
+  }
+);
+
+export const deleteUser = createAsyncThunk(
+  "user/deleteUser",
+  async (id: number, { rejectWithValue }) => {
+    try {
+      const response = await deleteUserService(id);
+      if (!response) {
+        throw new Error("No se pudo obtener la respuesta.");
+      }
+      return response;
+    } catch (error) {
+      if (error instanceof Error) {
+        return rejectWithValue(error.message);
+      }
+      return rejectWithValue("An unknown error occurred.");
+    }
+  }
+);
+
+export const updateUser = createAsyncThunk(
+  "user/updateUser",
+  async (props: { id: number; user: EditUser; close: () => void }) => {
+    try {
+      const response = await updateUserService(props.id, props.user);
+      if (!response) {
+        toast.error("No se pudo obtener la respuesta.");
+        return false;
+      }
+      props.close();
+      toast.success("Usuario actualizado correctamente.");
+      fetchUsers("");
+      return true;
+    } catch (error) {
+      if (error instanceof Error) {
+        toast.error(error.message);
+        return false;
+      }
+      toast.error("An unknown error occurred.");
+      return false;
+    }
+  }
+);
+
+export const createUser = createAsyncThunk(
+  "user/createUser",
+  async (props: { user: Signup; close: () => void }) => {
+    try {
+      const response = await createUserService(props.user);
+      if (!response) {
+        toast.error("No se pudo obtener la respuesta.");
+        return false;
+      }
+      props.close();
+      toast.success("Usuario registrado correctamente.");
+      return true;
+    } catch (error) {
+      if (error instanceof Error) {
+        toast.error(error.message);
+        return false;
+      }
+      toast.error("An unknown error occurred.");
+      return false;
     }
   }
 );

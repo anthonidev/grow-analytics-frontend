@@ -20,7 +20,6 @@ export const Header = () => {
   return (
     <div className="grid w-full grid-cols-2 items-center gap-2 lg:grid-cols-4">
       <div className="col-span-4">
-        <h2 className="text-lg font-semibold text-gray-900">Usuarios</h2>
         <Input
           className="w-full sm:max-w-[100%]"
           prefix={<MagnifyingGlassIcon className="h-5 w-5 text-gray-500" />}

@@ -7,11 +7,11 @@ export default function LayoutAuth({
   children: React.ReactNode;
 }>): JSX.Element {
   return (
-    <div className="flex  flex-col lg:flex-row">
-      <main className="flex h-screen min-h-screen  w-full flex-col  items-center  justify-center space-y-2 bg-indigo-100 bg-points dark:bg-osc lg:w-1/2 ">
+    <div className="flex  flex-col lg:flex-row ">
+      <main className="flex p-4  h-screen min-h-screen  w-full flex-col  items-center  justify-center space-y-2 bg-indigo-100  bg-points dark:bg-osc lg:w-1/2 ">
         <ThemeSwitcher />
 
-        <section className="mx-4 max-w-lg w-full bg-white overflow-hidden rounded-xl  shadow-2xl dark:bg-osc-200">
+        <section className="mx-4 max-w-lg w-full  bg-white overflow-hidden rounded-xl  shadow-2xl dark:bg-osc-200">
           {children}
           <p className="text-xs text-center text-gray-500">or login with </p>
           <div className="flex justify-center space-x-5  p-4">
@@ -55,7 +55,7 @@ export default function LayoutAuth({
         <div className="absolute bottom-5 right-5 text-xs text-gray-100">
           <span>by </span>
           <Link
-            href="https://agenciabelmont.com"
+            href="https://github.com/anthonidev"
             className="font-bold text-white hover:underline"
           >
             Anthoni Portocarrero

@@ -7,22 +7,23 @@ export default withAuth(
     const token = await getToken({ req, secret: process.env.JWT_SECRET });
 
     const isAuth = !!token;
-    const isAuthPage = req.nextUrl.pathname.startsWith("/login");
+    const path = req.nextUrl.pathname;
+    const isAuthPage =
+      path.startsWith("/login") || path.startsWith("/register");
 
-    // If user is already authenticated and tries to access the login page, redirect to '/'
+    // Si el usuario ya está autenticado y trata de acceder a /login o /register, redirigir a '/'
     if (isAuth && isAuthPage) {
       return NextResponse.redirect(new URL("/", req.url));
     }
 
-    // Rest of the existing logic
+    // Permitir el acceso a las páginas de autenticación sin redirigir
     if (isAuthPage) {
-      if (isAuth) {
-        return NextResponse.redirect(new URL("/dashboard", req.url));
-      }
       return null;
     }
+
+    // Redirigir a /login si el usuario no está autenticado y trata de acceder a otras rutas protegidas
     if (!isAuth) {
-      let from = req.nextUrl.pathname;
+      let from = path;
       if (req.nextUrl.search) {
         from += req.nextUrl.search;
       }
@@ -32,16 +33,16 @@ export default withAuth(
       );
     }
   },
-
   {
     callbacks: {
       async authorized() {
-        return true;
+        return true; // Deja que el middleware maneje la autorización
       },
     },
   }
 );
 
+// Configuración para que el matcher excluya /login y /register
 export const config = {
-  matcher: ["/:path*", "/"],
+  matcher: ["/((?!login|register).*)"], // Aplica a todas las rutas excepto /login y /register
 };

@@ -1,20 +1,30 @@
 "use client";
 import { useAppDispatch, useAppSelector } from "@/context/hooks";
-import { fetchUsers } from "@/context/slice/userSlice";
+import { deleteUser, fetchUsers } from "@/context/slice/userSlice";
+import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 import type { TableProps } from "antd";
-import { Form, Table } from "antd";
+import { Button, Form, Popconfirm, Table } from "antd";
 import { useSearchParams } from "next/navigation";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Header } from "./Header";
+import ModalEdit from "./ModalEdit";
 
 const TableUsers: React.FC = () => {
   const [form] = Form.useForm();
   const { users, count, current_page, loading } = useAppSelector(
     (state) => state.user
   );
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedUser, setSelectedUser] = useState<UserAccount | null>(null);
 
   const dispatch = useAppDispatch();
   const searchParams = useSearchParams();
+  const handleDelete = (id: number) => {
+    const params = searchParams.toString();
+    dispatch(deleteUser(id)).then(() => {
+      dispatch(fetchUsers(params));
+    });
+  };
 
   useEffect(() => {
     const params = searchParams.toString();
@@ -46,42 +56,33 @@ const TableUsers: React.FC = () => {
       width: "40%",
       editable: true,
     },
-    // {
-    //   title: "operation",
-    //   dataIndex: "operation",
-    //   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    //   render: (_: any, record: UserAccount) => {
-    //     const editable = isEditing(record);
-    //     return editable ? (
-    //       <span>
-    //         <Typography.Link
-    //           onClick={() => save(record.key)}
-    //           style={{ marginInlineEnd: 8 }}
-    //         >
-    //           Save
-    //         </Typography.Link>
-    //         <Popconfirm title="Sure to cancel?" onConfirm={cancel}>
-    //           <a>Cancel</a>
-    //         </Popconfirm>
-    //       </span>
-    //     ) : (
-    //       <div className="flex space-x-2">
-    //         <Typography.Link
-    //           disabled={editingKey !== ""}
-    //           onClick={() => edit(record)}
-    //         >
-    //           Edit
-    //         </Typography.Link>
-    //         <Typography.Link
-    //           disabled={editingKey !== ""}
-    //           onClick={() => edit(record)}
-    //         >
-    //           Edit
-    //         </Typography.Link>
-    //       </div>
-    //     );
-    //   },
-    // },
+    {
+      title: "operation",
+      dataIndex: "operation",
+      render: (_: unknown, record: UserAccount) =>
+        users.length >= 1 ? (
+          <div className="flex space-x-2 justify-center items-center">
+            <Button
+              onClick={() => {
+                setSelectedUser(record);
+                setIsModalOpen(true);
+              }}
+              variant="link"
+              color="default"
+              icon={<PencilIcon />}
+              classNames={{
+                icon: "h-7 w-7 text-green-500 border p-1 rounded dark:bg-gray-800 dark:border-gray-800",
+              }}
+            ></Button>
+            <Popconfirm
+              title="Sure to delete?"
+              onConfirm={() => handleDelete(record.id)}
+            >
+              <TrashIcon className="h-7 w-7 text-red-500 border p-1 rounded dark:bg-gray-800 dark:border-gray-800" />
+            </Popconfirm>
+          </div>
+        ) : null,
+    },
   ];
 
   const mergedColumns: TableProps<UserAccount>["columns"] = columns.map(
@@ -96,6 +97,7 @@ const TableUsers: React.FC = () => {
           inputType: col.dataIndex === "id" ? "number" : "text",
           dataIndex: col.dataIndex,
           title: col.title,
+
           // editing: isEditing(record),
         }),
       };
@@ -103,31 +105,40 @@ const TableUsers: React.FC = () => {
   );
 
   return (
-    <Form form={form} component={false}>
-      <Table<UserAccount>
-        bordered
-        title={() => <Header />}
-        loading={loading}
-        footer={() => `Total de usuarios: ${count}`}
-        dataSource={users}
-        columns={mergedColumns}
-        rowClassName="editable-row"
-        pagination={{
-          total: count,
-          pageSize: 10,
-          current: current_page,
-          onChange: (page) => {
-            let params = searchParams.toString();
-
-            if (params.includes("page="))
-              params = params.replace(/page=\d+/, `page=${page}`);
-            else if (params) params += `&page=${page}`;
-            else params = `page=${page}`;
-            dispatch(fetchUsers(params));
-          },
-        }}
-      />
-    </Form>
+    <>
+      <Form form={form} component={false}>
+        <Table<UserAccount>
+          bordered
+          title={() => <Header />}
+          loading={loading}
+          footer={() => `Total de usuarios: ${count}`}
+          dataSource={users}
+          columns={mergedColumns}
+          rowClassName="editable-row"
+          pagination={{
+            total: count,
+            pageSize: 10,
+            current: current_page,
+            onChange: (page) => {
+              let params = searchParams.toString();
+              if (params.includes("page="))
+                params = params.replace(/page=\d+/, `page=${page}`);
+              else if (params) params += `&page=${page}`;
+              else params = `page=${page}`;
+              dispatch(fetchUsers(params));
+            },
+          }}
+        />
+      </Form>
+      {selectedUser && (
+        <ModalEdit
+          user={selectedUser}
+          setSelectedUser={setSelectedUser}
+          isModalOpen={isModalOpen}
+          setIsModalOpen={setIsModalOpen}
+        />
+      )}
+    </>
   );
 };
 

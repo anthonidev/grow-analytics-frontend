@@ -32,14 +32,14 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ProviderUI>
-          <ProviderRedux>
+        <ProviderRedux>
+          <ProviderUI>
             <ProviderAuth>
               {children}
               <ProviderToast />
             </ProviderAuth>
-          </ProviderRedux>
-        </ProviderUI>
+          </ProviderUI>
+        </ProviderRedux>
       </body>
     </html>
   );
